@@ -1,0 +1,254 @@
+% $Id: jfesample.tex,v 19:a118fd22993e 2013/05/24 04:57:55 stanton $
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=.05in]{geometry}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\newenvironment{QandA}{\begin{enumerate}[label=\bfseries\alph*.]\bfseries}
+                      {\end{enumerate}}
+\newenvironment{answered}{\par\normalfont}{}
+\usepackage{lipsum}
+\pagestyle{empty}
+%\usepackage{epstopdf}
+
+
+\begin{document}
+\title{ Report:Programming Assignment I}
+\author{Subhajit Mondal}
+\date{\vspace{-5ex}}
+\maketitle
+\noindent%
+\begin{QandA}
+   \item Backpropagation equations for all the layers in terms of matrix notation.
+         \begin{answered}
+         \textcolor{blue}{Network Structure:\\}Our neural network have three hidden layers beside input and output layers.\\
+         Input layer take \textcolor{red}{784 dimensional vector} as input followed by \textcolor{red}{h1(1000)} , \textcolor{red}{h2(500)} and \textcolor{red}{h3(250)} hidden layers with hidden units shown in brackets. Output layer got \textcolor{red}{10 units}.   
+         \begin{enumerate}
+  			 \item Hidden layer use sigmoid or ReLu as activation function.
+  			 \item Output layers activation function is linear.
+  		     \item For classification we use softmax function and we took cross-entropy as error function.
+		 \end{enumerate}
+		 Now the backpropagation equations for the network is,
+		 \begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=6in,height=3.55in]{on}
+		\caption{our network }
+		\label{fig:snr20fft}
+	\end{center}
+		
+\end{figure}\\
+		 
+         \textcolor{blue}{Delta for output layer:\\}  
+         \begin{equation}
+        \textcolor{magenta}{ \delta_o=(\hat{y}-y)},  \text{    where } \delta_o, \hat{y}, y \in \mathbb{R}^{10} 
+         \end{equation}
+         where \textcolor{red}{$\hat{y}$} is output(from the forward propagation) of the neural network for a specific input. \textcolor{red}{y} is the given label for the specific input. \textcolor{black}{For the cross entrophy error function with softmax give us the $\delta_o$ as in the above form.}\\
+		
+         
+         
+ 
+         \textcolor{blue}{Delta for $3^{rd}$ hidden layer:\\}
+         \begin{equation}
+        \textcolor{magenta}{\delta_3=(\delta_{o}W_{h3}^T)*\frac{d(f(in_{L3}))}{d(in_{L3})}}
+         \text{    ;where } \delta_o \in \mathbb{R}^{1*10}, \delta_3 \in \mathbb{R}^{1*250},W_{h3} \in \mathbb{R}^{250*10} and \frac{d(f(in_{L3}))}{d(in_{L3})} \in \mathbb{R}^{1*250}
+         \end{equation}         
+Where, $W_{h3}$ is the weight matrix between \textcolor{red}{output layer} and \textcolor{red}{h3}  . \textcolor{red}{$in_{L3}$} is input to h3. \textcolor{red}{$f(*)$} is activation function for hidden layer. $\star$ means element wise multiplication.
+         
+         \textcolor{blue}{Delta for $2^{nd}$ hidden layer:\\}
+         \begin{equation}
+         \textcolor{magenta}{\delta_2=(\delta_{3}W_{h2}^T)*\frac{d(f(in_{L2}))}{d(in_{L2})}}
+         \text{    ;where } \delta_3 \in \mathbb{R}^{1*250}, \delta_2 \in \mathbb{R}^{1*500},W_{h2} \in \mathbb{R}^{500*250} and \frac{d(f(in_{L2}))}{d(in_{L2})} \in \mathbb{R}^{1*500}
+         \end{equation} 
+         Where, $W_{h2}$ is the weight matrix between \textcolor{red}{h3} and \textcolor{red}{h2}. \\  \textcolor{red}{$in_{L2}$} is input to h2.
+         
+         
+         
+         \textcolor{blue}{Delta for $1^{st}$ hidden layer:\\ }
+          \begin{equation}
+         \textcolor{magenta}{\delta_1=(\delta_{2}W_{h1}^T)*\frac{d(f(in_{L1}))}{d(in_{L1})}}
+         \text{    ;where } \delta_2 \in \mathbb{R}^{1*500}, \delta_1 \in \mathbb{R}^{1*1000},W_{h1} \in \mathbb{R}^{784*1000} and \frac{d(f(in_{L1}))}{d(in_{L1})} \in \mathbb{R}^{1*1000}
+         \end{equation} 
+         Where, $W_{h1}$ is the weight matrix between \textcolor{red}{h2} and \textcolor{red}{h1}  .\\ \textcolor{red}{$in_{L1}$} is input to h1. 
+        
+         \textcolor{blue}{Gradient of  $W_{h3}$:\\ }
+		\begin{equation}
+		\textcolor{magenta}{dW_{h3}=O_{3}^{T}\delta_o}\text{;where .} dW_{h3} \in \mathbb{R}^{250*10}, O_{3} \in \mathbb{R}^{1*250}
+		\end{equation}		         
+         $dW_{h3}$ is gradient of $W_{h3}$ and  $O_{3}$  is output of hidden layer h3.\\
+         \textcolor{blue}{Gradient of  $W_{h2}$:\\ }
+		\begin{equation}
+		\textcolor{magenta}{dW_{h2}=O_{2}^{T}\delta_3}\text{;where .} dW_{h2} \in \mathbb{R}^{500*250}, O_{2} \in \mathbb{R}^{1*500}
+		\end{equation}		         
+         $dW_{h2}$ is gradient of $W_{h2}$ and  $O_{2}$  is output of hidden layer h2.\\
+         yer h3.\\
+         \textcolor{blue}{Gradient of  $W_{h1}$:\\ }
+		\begin{equation}
+		\textcolor{magenta}{W_{h1}=O_{1}^{T}\delta_2}\text{;where .} dW_{h1} \in \mathbb{R}^{1000*500}, O_{1} \in \mathbb{R}^{1*1000}
+		\end{equation}		         
+         $dW_{h1}$ is gradient of $W_{h1}$ and  $O_{1}$  is output of hidden layer h1.\\
+         yer h3.\\
+         \textcolor{blue}{Gradient of  $W_{in}$:\\ }
+		\begin{equation}
+		\textcolor{magenta}{dW_{in}=X^{T}\delta_1}\text{;where .} dW_{in} \in \mathbb{R}^{784*1000}, X \in \mathbb{R}^{1*784}
+		\end{equation}		         
+         $dW_{in}$ is gradient of $W_{in}$ which is weight matrix between input layer and h1 . $X$  is input vectors.\\
+         \end{answered}
+
+   \item Plots for testing and training loss for sigmoid activation function for diffrent learning rates:
+   
+         \begin{answered}
+         The neural networks are trained using sigmoid activation function,with learning rate schedular (by 0.85 every 250 iteration) and momentum (momentum parameter 0.9) update method. \\                    
+         \textcolor{blue}{Learning rate:0.01\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{sig001.eps}
+		       \caption{iteration vs training and testing error for learning rate:0.01}
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+         \textcolor{blue}{Learning rate:0.05\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{sig005.eps}
+		       \caption{iteration vs training and testing error for learning rate:0.05}
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+         \textcolor{blue}{Learning rate:0.1\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{sig01.eps}
+		       \caption{iteration vs training and testing error for learning rate:0.1}
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+          We can see from the figures that errors are convergeing at a faster rate with the increase of learning rate.For the 0.1 learning rate the error converge quickly than others.
+         \end{answered}
+        
+         \newpage
+         \item Sigmoid activation function with and without learning rate scheduling 
+         \begin{answered}
+         Now we are training the model without LR scheduling(previously all training done using LR scheduling) and plot the training and test error plot with iteration.\\
+          \textcolor{blue}{Learning rate:0.5(without scheduling)\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{sig005wolr.eps}
+		       \caption{iteration vs training and testing error for learning rate:0.5 without scheduling }
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+         \textcolor{blue}{Learning rate:0.5(with scheduling)\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{sig05.eps}
+		       \caption{iteration vs training and testing error for learning rate:0.5 with scheduling by 0.85 every 250 iteration}
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+         From figures we can clearly see that with Learning rate Scheduling the error converge faster than non scheduling case.
+         \end{answered}
+         \newpage
+         \item Sigmoid activation function with vs ReLu activation function with scheduling using learning rate:0.1 
+         \begin{answered}
+          \textcolor{blue}{Sigmoid activation function\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{sig01.eps}
+		       \caption{iteration vs training and testing error for Sigmoid activation function}
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+         \textcolor{blue}{Using ReLu activation function\\}
+         \begin{figure}[h!]
+	       \begin{center}
+		     \includegraphics[width=4.5in,height=2.9in]{relu.eps}
+		       \caption{iteration vs training and testing error for ReLu activation function}
+		       \label{fig:snr20fft}
+	       \end{center}
+		
+         \end{figure}\\
+         We can see from above figures that if we use  ReLu activation function,the errors converge very faster than Sigmoid activation function.For Relu we have taken only 3000 iteration but we can see that error already reduced than Sigmoid function.\\
+              		 \textcolor{blue}{Final Accuracy for Sigmoid 94.84 percent.\\Final ReLu for Sigmoid 98.15 percent.}
+         \end{answered}
+         \newpage
+         \item Prediction for a fixed set of 20 images 
+         \begin{answered}
+         \textcolor{blue}{For ReLu:}
+         
+
+\begin{center}
+ \begin{tabular}{||c c c c c||} 
+ \hline
+ Image & True & 1st Prediction & 2nd prediction & 3rd prediction \\ [0.5ex] 
+ \hline\hline
+4387&5&5&9&3\\
+8320&2&2&7&3\\
+4077&1&1&8&4\\
+4751&4&4&6&1\\
+4668&2&2&3&8\\
+6191&0&0&2&9\\
+8500&4&4&7&1\\
+5164&9&9&5&3\\
+2918&2&2&3&4\\
+229&7&7&3&9\\
+4988&9&9&7&3\\
+5586&8&8&2&0\\
+9736&6&6&5&8\\
+6960&7&7&3&2\\
+1546&2&2&3&7\\
+9009&7&2&3&7\\
+5308&2&2&3&7\\
+846&7&7&9&0\\
+9373&6&6&4&0\\
+8817&9&9&3&5\\
+ \hline
+\end{tabular}
+\end{center}
+
+\textcolor{blue}{For sigmoid:}
+\begin{center}
+ \begin{tabular}{||c c c c c||} 
+ \hline
+ Image & True & 1st Prediction & 2nd prediction & 3rd prediction \\ [0.5ex] 
+ \hline\hline
+4387& 5& 5& 8& 3\\
+8320&2&2&7&3\\
+4077&1&1&3&8\\
+4751&4&6&2&4\\
+4668&2&2&3&1\\
+6191&0&0&2&5\\
+8500&4&4&9&7\\
+5164&9&9&5&4\\
+2918&2&2&3&4\\
+229&7&7&9&3\\
+4988&9&9&7&4\\
+5586&8&8&0&9\\
+9736&6&6&5&2\\
+6960&7&7&3&2\\
+1546&2&2&3&8\\
+9009&7&2&3&7\\
+5308&2&2&3&6\\
+846&7&7&9&0\\
+9373&6&6&4&2\\
+8817&9&9&4&3\\
+ \hline
+\end{tabular}
+\end{center}
+
+
+
+         \end{answered}
+\end{QandA}
+
+\end{document}
