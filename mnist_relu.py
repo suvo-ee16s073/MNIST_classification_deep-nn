@@ -1,13 +1,13 @@
 
 """
 
-# classification task on mnist data
+# classification task on mnist data using deep neural network
 
 # There are three hiddenlayer with  1000, 500, 250 units. we use crossentrophy as loss function  
 
 # Important: in this code i implemented ReLu activation function but i did not change the name of the Sigmoid funtion here (as same    code i implemented for sigmoid previously) ,please read Sigmoid as ReLu here.
 
-# momentum, learningrate scheduling, regularization  implemented here.
+# momentum, learning rate scheduling, regularization  implemented here.
 
 # This code is using only numpy, scipy.io and matplotlib.pyplot  
 
