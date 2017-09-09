@@ -3,9 +3,9 @@
 
 # classification task on mnist data using deep neural network
 
-# There are three hiddenlayer with  1000, 500, 250 units. we use crossentrophy as loss function  
+# There are three hiddenlayer with  1000, 500, 250 units. we use cross entrophy as loss function  
 
-# Important: in this code i implemented ReLu activation function but i did not change the name of the Sigmoid funtion here (as same    code i implemented for sigmoid previously) ,please read Sigmoid as ReLu here.
+# Important: in this code i implemented ReLu activation function but I did not change the name of the Sigmoid funtion here (as same    code i implemented for sigmoid previously) ,please read Sigmoid as ReLu here.
 
 # momentum, learning rate scheduling, regularization  implemented here.
 
@@ -170,13 +170,13 @@ for alpha in alphas:
         errr.append(err)
         if (j% 100) == 0:
             print("Error after "+str(j)+" iterations:" + str(err))
-        if (j%250) == 0:#LR scheduling
+        if (j%250) == 0:      #LR scheduling
             alpha_h = alpha_h*0.85
         """momentum"""    
-        momentum0 = 0.9 * momentum0-alpha_h * (l0w/64)
-        momentum1 = 0.9 * momentum1-alpha_h * (l1w/64)
-        momentum2 = 0.9 * momentum2-alpha_h * (l2w/64) #momentum update
-        momentum3 = 0.9 * momentum3-alpha_h * (l3w/64)  
+        momentum0 = 0.9 * momentum0 - alpha_h * (l0w/64)
+        momentum1 = 0.9 * momentum1 - alpha_h * (l1w/64)
+        momentum2 = 0.9 * momentum2 - alpha_h * (l2w/64) #momentum update
+        momentum3 = 0.9 * momentum3 - alpha_h * (l3w/64)  
         """weight update"""
         synapse_3 = (1 - alpha_h * 0.005) * synapse_3 + momentum3
         synapse_2 = (1 - alpha_h * 0.005) * synapse_2 + momentum2
@@ -232,14 +232,14 @@ idx_20=idx_20['c_20']
  # top 3 predictions for 20 randomly choosen test images
 t_20_arr = [];
 for ii in range(0,20):
-    layer_0 = test_img[idx_20[0][ii],:]
+    layer_0 = test_img[idx_20[0][ii], :]
     layer_0.resize(1, 784)
-    l1 = np.dot(layer_0,synapse_0)
+    l1 = np.dot(layer_0, synapse_0)
     layer_1 = sigmoid(l1)
-    layer_2 = sigmoid(np.dot(layer_1,synapse_1))
-    layer_3 = sigmoid(np.dot(layer_2,synapse_2))
-    layer_4 = softmax_layer_output(layer_3,synapse_3)
-    t20_tgt = test_labels[idx_20[0][ii],:][0]
+    layer_2 = sigmoid(np.dot(layer_1, synapse_1))
+    layer_3 = sigmoid(np.dot(layer_2, synapse_2))
+    layer_4 = softmax_layer_output(layer_3, synapse_3)
+    t20_tgt = test_labels[idx_20[0][ii], :][0]
     op_y = layer_4.copy()
     op_y1 =  layer_4.copy()
     op_y1.sort()
